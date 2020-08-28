@@ -10,7 +10,7 @@ Gst.init(None)
 
 app = Flask(__name__, template_folder='template')
 
-DEBUG = True
+DEBUG = False
 
 if DEBUG:
     src = "videotestsrc"
@@ -19,7 +19,7 @@ else:
 
 launch_string = "%s ! videoconvert ! clockoverlay ! " \
                 "x264enc tune=zerolatency ! mpegtsmux ! " \
-                "hlssink location=video/usb_camera.%%05d.ts playlist-location=video/usb_camera.m3u8 max-files=5" % src
+                "hlssink location=video/usb_camera.%%05d.ts playlist-location=video/usb_camera.m3u8 max-files=10 target-duration=1" % src
 
 pipeline = Gst.parse_launch(launch_string)
 pipeline.set_state(Gst.State.PLAYING)
